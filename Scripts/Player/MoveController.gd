@@ -10,6 +10,8 @@ var initialTransform = null
 
 var interactableItem = null
 
+var sanity = 100
+
 onready var pulse = $Light2D
 onready var pulseCollision = $Light2D/Area2D/CollisionShape2D
 
@@ -24,11 +26,14 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 
 func _process(delta):
+
 	if(Input.is_physical_key_pressed(KEY_SPACE) and !gettingBigger):
 		initialTransform = global_position
 		gettingBigger = true
 	if(Input.is_action_just_pressed("ui_select") and interactableItem != null):
 		interactableItem.interact()
+		
+	sanity -= delta
 	
 	if(gettingBigger):
 		makeBigger(delta)
