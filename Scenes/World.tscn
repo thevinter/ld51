@@ -1,54 +1,53 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://TempArt/bgpng.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=3]
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32, 32 )
-
-[sub_resource type="OccluderPolygon2D" id=4]
-polygon = PoolVector2Array( -32, -32, 32, -32, 32, 33, -32, 32 )
+[ext_resource path="res://Scripts/Items/Lever.gd" type="Script" id=4]
+[ext_resource path="res://Prefabs/Obstacle.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CanvasItemMaterial" id=3]
-light_mode = 2
 
-[node name="World" type="Node2D"]
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 4, 4 )
+
+[node name="World" type="YSort"]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 65, 14 )
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2( -17, 37 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="StaticBody2D3"]
-texture = ExtResource( 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
-shape = SubResource( 2 )
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="StaticBody2D3"]
-occluder = SubResource( 4 )
-
 [node name="Background" type="Sprite" parent="."]
 material = SubResource( 3 )
-z_index = -1
+z_index = -2
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
-position = Vector2( 103, 98 )
+[node name="Obstacle" parent="." instance=ExtResource( 5 )]
+
+[node name="Obstacle2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 65, 69 )
+
+[node name="Obstacle3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 228, 46 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color( 0, 0, 0, 1 )
+
+[node name="Lever" type="StaticBody2D" parent="."]
+position = Vector2( 121, 21 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="StaticBody2D4"]
+[node name="Sprite" type="Sprite" parent="Lever"]
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
-shape = SubResource( 2 )
+[node name="Area2D" type="Area2D" parent="Lever"]
+script = ExtResource( 4 )
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="StaticBody2D4"]
-occluder = SubResource( 4 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lever/Area2D"]
+shape = SubResource( 4 )
