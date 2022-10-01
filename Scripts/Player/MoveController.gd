@@ -9,6 +9,7 @@ var gettingBigger = false
 var initialTransform = null
 
 var interactableItem = null
+var resting = false
 
 var sanity = 100
 
@@ -33,7 +34,7 @@ func _process(delta):
 	if(Input.is_action_just_pressed("ui_select") and interactableItem != null):
 		interactableItem.interact()
 		
-	sanity -= delta
+	sanity += delta * (1 if resting else -1)
 	
 	if(gettingBigger):
 		makeBigger(delta)

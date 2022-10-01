@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://TempArt/bgpng.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Scripts/Items/Lever.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Obstacle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/UI/SanityCounter.gd" type="Script" id=6]
+[ext_resource path="res://TempArt/bonfire.png" type="Texture" id=7]
+[ext_resource path="res://TempArt/light.png" type="Texture" id=8]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 
@@ -17,6 +19,13 @@ font_path = "res://Fonts/AmsterBrush .woff.woff"
 
 [sub_resource type="DynamicFont" id=6]
 font_data = SubResource( 5 )
+
+[sub_resource type="CapsuleShape2D" id=7]
+radius = 4.0
+height = 8.0
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 48.2597
 
 [node name="World" type="YSort"]
 
@@ -73,5 +82,28 @@ text = "San"
 script = ExtResource( 6 )
 
 [node name="Campfire" type="StaticBody2D" parent="."]
+position = Vector2( 167, 65 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Campfire"]
+position = Vector2( 0, -15 )
+scale = Vector2( 0.156, 0.156 )
+texture = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Campfire"]
+rotation = 1.5708
+shape = SubResource( 7 )
+
+[node name="Area2D" type="Area2D" parent="Campfire"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Campfire/Area2D"]
+position = Vector2( 0, -5 )
+shape = SubResource( 8 )
+
+[node name="Light2D" type="Light2D" parent="Campfire"]
+texture = ExtResource( 8 )
+offset = Vector2( 0, -5 )
+texture_scale = 0.1
+energy = 0.5
