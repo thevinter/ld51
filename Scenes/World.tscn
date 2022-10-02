@@ -1,20 +1,15 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Prefabs/DoorLever.tscn" type="PackedScene" id=1]
 [ext_resource path="res://TempArt/bgpng.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scripts/Items/Lever.gd" type="Script" id=4]
+[ext_resource path="res://Prefabs/Puzzle.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Obstacle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/UI/SanityCounter.gd" type="Script" id=6]
-[ext_resource path="res://TempArt/vending.png" type="Texture" id=7]
+[ext_resource path="res://Prefabs/Machine.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/Campfire.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scripts/Items/Machine.gd" type="Script" id=9]
-[ext_resource path="res://Scripts/Items/GenericInteract.gd" type="Script" id=10]
 
 [sub_resource type="CanvasItemMaterial" id=3]
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 4, 4 )
 
 [sub_resource type="DynamicFontData" id=5]
 font_path = "res://Fonts/AmsterBrush .woff.woff"
@@ -22,22 +17,10 @@ font_path = "res://Fonts/AmsterBrush .woff.woff"
 [sub_resource type="DynamicFont" id=6]
 font_data = SubResource( 5 )
 
-[sub_resource type="CapsuleShape2D" id=7]
-radius = 6.0
-height = 16.0
-
-[sub_resource type="BitmapFont" id=8]
-
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 0.419608, 0, 0, 1 )
-
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 19.5, 16 )
-
 [node name="World" type="YSort"]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 65, 14 )
+position = Vector2( 159, 90 )
 
 [node name="Background" type="Sprite" parent="."]
 material = SubResource( 3 )
@@ -48,6 +31,7 @@ __meta__ = {
 }
 
 [node name="Obstacle" parent="." instance=ExtResource( 5 )]
+position = Vector2( 100, 139 )
 
 [node name="Obstacle2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 233, 157 )
@@ -58,22 +42,6 @@ position = Vector2( 282, 18 )
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color( 0, 0, 0, 1 )
-
-[node name="Lever" type="StaticBody2D" parent="."]
-position = Vector2( 121, 21 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="Lever"]
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 1 )
-
-[node name="Area2D" type="Area2D" parent="Lever"]
-script = ExtResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Lever/Area2D"]
-shape = SubResource( 4 )
 
 [node name="Control" type="CanvasLayer" parent="."]
 
@@ -86,35 +54,21 @@ custom_fonts/font = SubResource( 6 )
 text = "San"
 script = ExtResource( 6 )
 
+[node name="Label2" type="Label" parent="Control"]
+margin_left = 3.0
+margin_top = 23.0
+margin_right = 43.0
+margin_bottom = 45.0
+custom_fonts/font = SubResource( 6 )
+text = "San"
+script = ExtResource( 6 )
+val = "heldItems"
+
 [node name="Campfire" parent="." instance=ExtResource( 8 )]
-position = Vector2( 289, 102 )
+position = Vector2( 302, 105 )
 
-[node name="Machine" type="StaticBody2D" parent="."]
-position = Vector2( 34, 42 )
-script = ExtResource( 9 )
+[node name="Machine" parent="." instance=ExtResource( 7 )]
 
-[node name="Sprite" type="Sprite" parent="Machine"]
-position = Vector2( 0.145004, -14.25 )
-scale = Vector2( 0.166, 0.166 )
-texture = ExtResource( 7 )
+[node name="DoorLever" parent="." instance=ExtResource( 1 )]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Machine"]
-position = Vector2( 0.145004, 0.750002 )
-rotation = 1.5708
-shape = SubResource( 7 )
-
-[node name="ProgressBar" type="ProgressBar" parent="Machine"]
-margin_left = -13.0
-margin_top = -37.0
-margin_right = 13.0
-margin_bottom = -35.0
-custom_fonts/font = SubResource( 8 )
-custom_styles/fg = SubResource( 9 )
-value = 80.0
-
-[node name="Area2D" type="Area2D" parent="Machine"]
-script = ExtResource( 10 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Machine/Area2D"]
-position = Vector2( 0.5, 2 )
-shape = SubResource( 10 )
+[node name="Puzzle" parent="." instance=ExtResource( 4 )]

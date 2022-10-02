@@ -4,6 +4,8 @@ var isFunctioning = false
 var repairPercentage = 0
 var isInteracting = false
 
+var generatedItems = 0
+
 onready var progress = $ProgressBar
 onready var style = progress.get("custom_styles/fg")
 
@@ -23,9 +25,14 @@ func _process(delta):
 	else:
 		if(!isFunctioning and repairPercentage > 0):
 			repairPercentage -= delta
-	print(repairPercentage)
+			
+	if(isFunctioning and generatedItems < 10):
+		generatedItems += delta/10
 
 
 func interact():
+	if(isFunctioning):
+		get_parent().get_node("Player").add_items(int(generatedItems))
+		generatedItems = 0
 	isInteracting = true
 

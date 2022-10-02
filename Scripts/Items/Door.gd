@@ -1,17 +1,22 @@
-extends Label
+extends StaticBody2D
 
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export var val = "sanity"
 
-onready var player = get_parent().get_parent().get_node("Player")
+var isOpen = false
 
 # Called when the node enters the scene tree for the first time.
-func _process(delta):
-	text = val + ": " + str(int(player.get(val)))
+func _ready():
 	pass # Replace with function body.
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func interact():
+	isOpen = !isOpen
+	get_node("Sprite").frame = 5 if isOpen else 0
+	get_node("CollisionShape2D").disabled = isOpen

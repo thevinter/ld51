@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://TempArt/bonfire.png" type="Texture" id=1]
 [ext_resource path="res://TempArt/light.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Items/Campfire.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Items/GenericInteract.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=7]
 radius = 4.0
@@ -10,11 +12,15 @@ height = 8.0
 [sub_resource type="CircleShape2D" id=8]
 radius = 48.2597
 
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 12, 10 )
+
 [node name="Campfire" type="StaticBody2D"]
-position = Vector2( 167, 65 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
+decay_speed = 200
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -15 )
@@ -36,3 +42,9 @@ texture = ExtResource( 2 )
 offset = Vector2( 0, -5 )
 texture_scale = 0.1
 energy = 0.5
+
+[node name="Interact" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact"]
+shape = SubResource( 9 )

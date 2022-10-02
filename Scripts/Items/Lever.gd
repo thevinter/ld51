@@ -1,4 +1,4 @@
-extends Area2D
+extends StaticBody2D
 
 
 # Declare member variables here. Examples:
@@ -15,5 +15,5 @@ func _ready():
 #func _process(delta):
 #	pass
 func interact():
-	print("Interacting")
-	pass
+	get_parent().get_node("Door").interact()
+

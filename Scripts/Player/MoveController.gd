@@ -13,6 +13,8 @@ var resting = false
 
 var sanity = 100
 
+var heldItems = 0
+
 onready var pulse = $Light2D
 onready var pulseCollision = $Light2D/Area2D/CollisionShape2D
 
@@ -38,6 +40,14 @@ func _process(delta):
 	if(gettingBigger):
 		makeBigger(delta)
 
+func add_items(num):
+	heldItems += num
+	
+func removeItem():
+	var x = heldItems
+	if(heldItems) > 0:
+		heldItems -= 1
+	return x
 
 func makeBigger(delta):
 	if(pulse.scale.x < 0.8):
