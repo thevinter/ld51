@@ -27,7 +27,6 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 
 func _process(delta):
-
 	if(Input.is_physical_key_pressed(KEY_SPACE) and !gettingBigger):
 		initialTransform = global_position
 		gettingBigger = true

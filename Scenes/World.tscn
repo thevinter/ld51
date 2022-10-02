@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://TempArt/bgpng.png" type="Texture" id=2]
@@ -6,8 +6,10 @@
 [ext_resource path="res://Scripts/Items/Lever.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Obstacle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/UI/SanityCounter.gd" type="Script" id=6]
-[ext_resource path="res://TempArt/bonfire.png" type="Texture" id=7]
-[ext_resource path="res://TempArt/light.png" type="Texture" id=8]
+[ext_resource path="res://TempArt/vending.png" type="Texture" id=7]
+[ext_resource path="res://Prefabs/Campfire.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scripts/Items/Machine.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/Items/GenericInteract.gd" type="Script" id=10]
 
 [sub_resource type="CanvasItemMaterial" id=3]
 
@@ -21,11 +23,16 @@ font_path = "res://Fonts/AmsterBrush .woff.woff"
 font_data = SubResource( 5 )
 
 [sub_resource type="CapsuleShape2D" id=7]
-radius = 4.0
-height = 8.0
+radius = 6.0
+height = 16.0
 
-[sub_resource type="CircleShape2D" id=8]
-radius = 48.2597
+[sub_resource type="BitmapFont" id=8]
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.419608, 0, 0, 1 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 19.5, 16 )
 
 [node name="World" type="YSort"]
 
@@ -43,10 +50,10 @@ __meta__ = {
 [node name="Obstacle" parent="." instance=ExtResource( 5 )]
 
 [node name="Obstacle2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 65, 69 )
+position = Vector2( 233, 157 )
 
 [node name="Obstacle3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 228, 46 )
+position = Vector2( 282, 18 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
@@ -68,9 +75,7 @@ script = ExtResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lever/Area2D"]
 shape = SubResource( 4 )
 
-[node name="Control" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Control" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="Control"]
 margin_left = 3.0
@@ -81,29 +86,35 @@ custom_fonts/font = SubResource( 6 )
 text = "San"
 script = ExtResource( 6 )
 
-[node name="Campfire" type="StaticBody2D" parent="."]
-position = Vector2( 167, 65 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Campfire" parent="." instance=ExtResource( 8 )]
+position = Vector2( 289, 102 )
 
-[node name="Sprite" type="Sprite" parent="Campfire"]
-position = Vector2( 0, -15 )
-scale = Vector2( 0.156, 0.156 )
+[node name="Machine" type="StaticBody2D" parent="."]
+position = Vector2( 34, 42 )
+script = ExtResource( 9 )
+
+[node name="Sprite" type="Sprite" parent="Machine"]
+position = Vector2( 0.145004, -14.25 )
+scale = Vector2( 0.166, 0.166 )
 texture = ExtResource( 7 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Campfire"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Machine"]
+position = Vector2( 0.145004, 0.750002 )
 rotation = 1.5708
 shape = SubResource( 7 )
 
-[node name="Area2D" type="Area2D" parent="Campfire"]
+[node name="ProgressBar" type="ProgressBar" parent="Machine"]
+margin_left = -13.0
+margin_top = -37.0
+margin_right = 13.0
+margin_bottom = -35.0
+custom_fonts/font = SubResource( 8 )
+custom_styles/fg = SubResource( 9 )
+value = 80.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Campfire/Area2D"]
-position = Vector2( 0, -5 )
-shape = SubResource( 8 )
+[node name="Area2D" type="Area2D" parent="Machine"]
+script = ExtResource( 10 )
 
-[node name="Light2D" type="Light2D" parent="Campfire"]
-texture = ExtResource( 8 )
-offset = Vector2( 0, -5 )
-texture_scale = 0.1
-energy = 0.5
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Machine/Area2D"]
+position = Vector2( 0.5, 2 )
+shape = SubResource( 10 )

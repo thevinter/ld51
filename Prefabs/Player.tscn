@@ -67,3 +67,7 @@ script = ExtResource( 6 )
 position = Vector2( 0, -1.5 )
 shape = SubResource( 3 )
 one_way_collision_margin = 0.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
